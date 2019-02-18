@@ -85,7 +85,7 @@ namespace structures {
 		DSRoutines::rangeCheckExcept(srcStartIndex + length - 1, src.size_, "Invalid src count");
 		DSRoutines::rangeCheckExcept(destStartIndex, dest.size_, "Invalid dst index");
 		DSRoutines::rangeCheckExcept(destStartIndex + length - 1, dest.size_, "Invalid dst count");
-		memmove(&dest, &src, length);
+		memmove(dest.getBytePointer(destStartIndex), src.getBytePointer(srcStartIndex), length);
 	}
 
 	byte* Vector::getBytePointer(const int index) const
