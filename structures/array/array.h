@@ -100,7 +100,9 @@ namespace structures
 	template<typename T>
 	Array<T>::~Array()
 	{
-		//TODO 02: Array
+		delete vector_;
+		vector_ = nullptr;
+		size_ = 0;
 	}
 
 	template<typename T>
@@ -122,8 +124,18 @@ namespace structures
 	template<typename T>
 	Array<T>& Array<T>::operator=(const Array<T>& other)
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::operator=: Not implemented yet.");
+		if (this != &other) 
+		{
+			if (other.size_ == size_)
+			{
+				*vector_ = *(other.vector_);
+			}
+			else
+			{
+				throw std::invalid_argument("Array sizes differ!");
+			}
+		}
+		
 	}
 	
 	template<typename T>
@@ -135,36 +147,45 @@ namespace structures
 	template<typename T>
 	T& Array<T>::operator[](const int index)
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::operator[]: Not implemented yet.");
+		try
+		{
+			return *reinterpret_cast<T*>(vector_->getBytePointer(mapFunction(index)));
+		}
+		catch (const std::exception&)
+		{
+			throw std::out_of_range("BAD INDEX!");
+		}
 	}
 
 	template<typename T>
 	const T Array<T>::operator[](const int index) const
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::operator[]: Not implemented yet.");
+		try
+		{
+			return *reinterpret_cast<T*>(vector_->getBytePointer(mapFunction(index)));
+		}
+		catch (const std::exception&)
+		{
+			throw std::out_of_range("BAD INDEX!");
+		}
 	}
 
 	template<typename T>
 	inline bool Array<T>::operator==(const Array<T>& other) const
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::operator==: Not implemented yet.");
+		return *vector_ == *other.vector_;
 	}
 
 	template<typename T>
 	void Array<T>::copy(const Array<T>& src, const int srcStartIndex, Array<T>& dest, const int destStartIndex, const int length)
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::copy: Not implemented yet.");
+		Vector::copy(*src.vector_, src.mapFunction(srcStartIndex), *dest.vector_, dest.mapFunction(destStartIndex), length * sizeof(T));
 	}
 
 	template<typename T>
 	inline int Array<T>::mapFunction(const int index) const
 	{
-		//TODO 02: Array
-		throw std::exception("Array<T>::mapFunction: Not implemented yet.");
+		return index * sizeof(T);
 	}
 }
 

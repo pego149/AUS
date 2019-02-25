@@ -66,7 +66,7 @@ namespace ui
 		factory->registerPrototype(structures::StructureADS::adsVECTOR, new structures::Vector(10));
 
 		//TODO 02: Array: register prototype
-		//factory->registerPrototype(structures::StructureADS::adsARRAY, new structures::Array<data::DataType>(10));
+		factory->registerPrototype(structures::StructureADS::adsARRAY, new structures::Array<data::DataType>(10));
 
 		//TODO 03: ArrayList: register prototype
 		//factory->registerPrototype(structures::StructureADS::adsLIST_ARRAY, new structures::ArrayList<data::DataType>());

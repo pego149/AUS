@@ -81,12 +81,11 @@ namespace structures {
 
 	void Vector::copy(const Vector& src, const int srcStartIndex, Vector& dest, const int destStartIndex, const int length)
 	{
-		DSRoutines::rangeCheckExcept(srcStartIndex, src.size_, "Invalid src index");
 		DSRoutines::rangeCheckExcept(srcStartIndex + length - 1, src.size_, "Invalid src count");
-		DSRoutines::rangeCheckExcept(destStartIndex, dest.size_, "Invalid dst index");
 		DSRoutines::rangeCheckExcept(destStartIndex + length - 1, dest.size_, "Invalid dst count");
-		if ((srcStartIndex < destStartIndex && destStartIndex < srcStartIndex + length - 1) && 
-			(srcStartIndex > destStartIndex && destStartIndex + length - 1 > srcStartIndex))
+		if (&src == &dest &&
+			(srcStartIndex <= destStartIndex && destStartIndex < srcStartIndex + length) && 
+			(srcStartIndex >= destStartIndex && destStartIndex + length > srcStartIndex))
 		{
 			memmove(dest.getBytePointer(destStartIndex), src.getBytePointer(srcStartIndex), length);
 		}

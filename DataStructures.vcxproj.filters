@@ -419,7 +419,6 @@
     <None Include="structures\ds_structure_types.h">
       <Filter>ds</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="data\form_data.resx" />
