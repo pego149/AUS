@@ -85,7 +85,31 @@ namespace structures {
 		DSRoutines::rangeCheckExcept(srcStartIndex + length - 1, src.size_, "Invalid src count");
 		DSRoutines::rangeCheckExcept(destStartIndex, dest.size_, "Invalid dst index");
 		DSRoutines::rangeCheckExcept(destStartIndex + length - 1, dest.size_, "Invalid dst count");
-		memmove(dest.getBytePointer(destStartIndex), src.getBytePointer(srcStartIndex), length);
+		if ((srcStartIndex < destStartIndex && destStartIndex < srcStartIndex + length - 1) && 
+			(srcStartIndex > destStartIndex && destStartIndex + length - 1 > srcStartIndex))
+		{
+			memmove(dest.getBytePointer(destStartIndex), src.getBytePointer(srcStartIndex), length);
+		}
+		else
+		{
+			memcpy(dest.getBytePointer(destStartIndex), src.getBytePointer(srcStartIndex), length);
+		}
+	}
+
+	Vector::Vector(Vector && other)
+	:memory_(std::move(other.memory_)), size_(other.size_)
+	{
+		other.memory_ = NULL;
+		other.size_ = NULL;
+	}
+
+	Vector & Vector::operator=(Vector && other)
+	{
+		if (this != &other) {
+			memory_ = std::move(other.memory_);
+			size_ = other.size_;
+		}
+		return *this;
 	}
 
 	byte* Vector::getBytePointer(const int index) const

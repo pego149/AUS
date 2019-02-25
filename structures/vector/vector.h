@@ -81,6 +81,10 @@ namespace structures {
 		/// <exception cref="std::out_of_range"> Vyhodena, ak zaciatocne alebo koncove indexy nepatria do prislusnych vektorov. </exception> 
 		static void copy(const Vector& src, const int srcStartIndex, Vector& dest, const int destStartIndex, const int length);
 	
+		Vector(Vector&& other);
+		Vector& operator=(Vector&& other);
+
+
 	private:
 		/// <summary> Ukazovatel na zaciatok pamate patriacej vektoru. </summary>
 		void* memory_;
