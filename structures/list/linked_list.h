@@ -215,14 +215,13 @@ namespace structures
 	inline LinkedList<T>::LinkedList(const LinkedList<T>& other):
 		LinkedList()
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::LinkedList: Not implemented yet.");
+		*this = other;
 	}
 
 	template<typename T>
 	inline LinkedList<T>::~LinkedList()
 	{
-		//TODO 04: LinkedList
+		clear();
 	}
 
 	template<typename T>
@@ -250,36 +249,71 @@ namespace structures
 	template<typename T>
 	inline LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& other)
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::operator=: Not implemented yet.");
+		if (this != &other)
+		{
+			clear();
+			LinkedListItem<T>* akt = other.first_;
+			while (akt != nullptr)
+			{
+				add(akt->accessData());
+				akt = akt->getNext();
+			}
+		}
+		return *this;
 	}
 
 	template<typename T>
 	inline T & LinkedList<T>::operator[](const int index)
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::operator[]: Not implemented yet.");
+		return getItemAtIndex(index)->accessData();
 	}
 
 	template<typename T>
 	inline const T LinkedList<T>::operator[](const int index) const
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::operator[]: Not implemented yet.");
+		return getItemAtIndex(index)->accessData();
 	}
 
 	template<typename T>
 	inline void LinkedList<T>::add(const T & data)
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::add: Not implemented yet.");
+		LinkedListItem<T>* novy = new LinkedListItem<T>(data);
+		if (!isEmpty())
+		{
+			first_ = novy;
+		}
+		else
+		{
+			last_->setNext(novy);
+		}
+		last_ = novy;
+		size_++;
 	}
 
 	template<typename T>
 	inline void LinkedList<T>::insert(const T & data, const int index)
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::insert: Not implemented yet.");
+		if (size_ == index)
+		{
+			add(data);
+		}
+		else
+		{
+			LinkedListItem<T>* novy = new LinkedListItem<T>(data);
+			if (index == 0)
+			{
+				novy->setNext(first_);
+				first_ = novy;
+			}
+			else
+			{
+				LinkedListItem<T>* pred = getItemAtIndex(index - 1);
+				novy->setNext(pred->getNext());
+				pred->setNext(novy);
+			}
+			size_++;
+		}
+
 	}
 
 	template<typename T>
@@ -292,8 +326,31 @@ namespace structures
 	template<typename T>
 	inline T LinkedList<T>::removeAt(const int index)
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::removeAt: Not implemented yet.");
+		DSRoutines::rangeCheckExcept(index, size_, "Invalid index");
+		LinkedListItem<T>* mazany;
+		if (index == 0)
+		{
+			mazany = first_;
+			first_ = first_->getNext();
+			if (mazany == last_)
+			{
+				last_ = nullptr;
+			}
+		}
+		else
+		{
+			LinkedListItem<T>* pred = getItemAtIndex(index - 1);
+			mazany = pred->getNext();
+			pred->setNext(mazany->getNext());
+			if (mazany == last_)
+			{
+				last_ = pred;
+			}
+		}
+		size_--;
+		T data = mazany->accessData();
+		delete mazany;
+		return data;
 	}
 
 	template<typename T>
@@ -306,8 +363,10 @@ namespace structures
 	template<typename T>
 	inline void LinkedList<T>::clear()
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::clear: Not implemented yet.");
+		while (size_ != 0)
+		{
+			removeAt(0);
+		}
 	}
 
 	template<typename T>
@@ -325,8 +384,13 @@ namespace structures
 	template<typename T>
 	inline LinkedListItem<T>* LinkedList<T>::getItemAtIndex(int index) const
 	{
-		//TODO 04: LinkedList
-		throw std::exception("LinkedList<T>::getItemAtIndex: Not implemented yet.");
+		DSRoutines::rangeCheckExcept(index, size_, "Invalid index");
+		LinkedListItem<T>* akt = first_;
+		for (size_t i = 0; i < index; i++)
+		{
+			akt = akt->getNext();
+		}
+		return akt;
 	}
 
 	template<typename T>
