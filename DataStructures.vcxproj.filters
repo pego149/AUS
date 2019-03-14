@@ -414,6 +414,9 @@
     <ClInclude Include="structures\table\unsorted_sequence_table.h">
       <Filter>structures\table</Filter>
     </ClInclude>
+    <ClInclude Include="structures\array\matrix.h">
+      <Filter>structures\array</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="structures\ds_structure_types.h">

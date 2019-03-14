@@ -135,7 +135,6 @@ namespace structures
 				throw std::invalid_argument("Array sizes differ!");
 			}
 		}
-		
 	}
 	
 	template<typename T>
