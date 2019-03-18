@@ -106,7 +106,10 @@ namespace structures
 	template<typename T>
 	ImplicitQueue<T>::~ImplicitQueue()
 	{
-		//TODO 05: ImplicitQueue
+		delete array_;
+		array_ = nullptr;
+		startIndex_ = 0;
+		size_ = 0;
 	}
 
 	template<typename T>
@@ -122,8 +125,15 @@ namespace structures
 	template<typename T>
 	inline ImplicitQueue<T>& ImplicitQueue<T>::operator=(const ImplicitQueue<T>& other)
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::operator=: Not implemented yet.");
+		if (this != &other)
+		{
+			*array_ = *other.array_;
+			/*delete array_;
+			array_ = new Array<T>(*other.array_);*/
+			startIndex_ = other.startIndex_;
+			size_ = other.size_;
+		}
+		return *this;
 	}
 
 	template<typename T>
@@ -135,43 +145,69 @@ namespace structures
 	template<typename T>
 	size_t ImplicitQueue<T>::size() const
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::size: Not implemented yet.");
+		return size_;
 	}
 
 	template<typename T>
 	inline void ImplicitQueue<T>::clear()
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::clear: Not implemented yet.");
+		size_ = 0;
 	}
 
 	template<typename T>
 	inline void ImplicitQueue<T>::push(const T& data)
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::push: Not implemented yet.");
+		if (size_ < array_->size())
+		{
+			(*array_)[(startIndex_ + size_) % array_->size()] = data;
+		}
+		else
+		{
+			throw std::logic_error("Full");
+		}
+		
 	}
 
 
 	template<typename T>
 	inline T ImplicitQueue<T>::pop()
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::pop: Not implemented yet.");
+		if (size_ > 0)
+		{
+			T data = (*array_)[startIndex_];
+			startIndex_ = (startIndex_ + 1) % array_->size();
+			size_--;
+			return data;
+		}
+		else
+		{
+			throw std::logic_error("Empty");
+		}
 	}
 
 	template<typename T>
 	inline T& ImplicitQueue<T>::peek()
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::peek: Not implemented yet.");
+		if (size_ > 0)
+		{
+			return (*array_)[startIndex_];
+		}
+		else
+		{
+			throw std::logic_error("Empty");
+		}
 	}
 
 	template<typename T>
 	inline const T ImplicitQueue<T>::peek() const
 	{
-		//TODO 05: ImplicitQueue
-		throw std::exception("ImplicitQueue<T>::peek: Not implemented yet.");
+		if (size_ > 0)
+		{
+			return (*array_)[startIndex_];
+		}
+		else
+		{
+			throw std::logic_error("Empty");
+		}
 	}
 }

@@ -24,7 +24,7 @@ namespace structures
 
 		/// <summary> Destruktor. </summary>
 		~ArrayList();
-		
+
 		/// <summary> Operacia klonovania. Vytvori a vrati duplikat zoznamu. </summary>
 		/// <returns> Ukazovatel na klon struktury. </returns>
 		Structure* clone() const override;
@@ -84,7 +84,7 @@ namespace structures
 
 		/// <summary> Vymaze zoznam. </summary>
 		void clear() override;
-	
+
 		/// <summary> Vrati skutocny iterator na zaciatok struktury </summary>
 		/// <returns> Iterator na zaciatok struktury. </returns>
 		/// <remarks> Zabezpecuje polymorfizmus. </remarks>
@@ -160,7 +160,7 @@ namespace structures
 	};
 
 	template<typename T>
-	inline ArrayList<T>::ArrayList():
+	inline ArrayList<T>::ArrayList() :
 		List(),
 		array_(new Array<T>(4)),
 		size_(0)
@@ -168,7 +168,7 @@ namespace structures
 	}
 
 	template<typename T>
-	inline ArrayList<T>::ArrayList(const ArrayList<T>& other):
+	inline ArrayList<T>::ArrayList(const ArrayList<T>& other) :
 		List(),
 		array_(new Array<T>(*other.array_)),
 		size_(other.size_)
@@ -229,7 +229,7 @@ namespace structures
 		{
 			throw std::out_of_range("BAD INDEX!");
 		}
-		
+
 	}
 
 	template<typename T>
@@ -270,7 +270,7 @@ namespace structures
 				enlarge();
 			}
 			Array<T>::copy(*array_, index, *array_, index + 1, size_ - index);
-			(*array_)[index] == data;
+			(*array_)[index] = data;
 			++size_;
 		}
 	}
@@ -322,15 +322,13 @@ namespace structures
 	template<typename T>
 	inline Iterator<T>* ArrayList<T>::getBeginIterator() const
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::getBeginIterator: Not implemented yet.");
+		return new ArrayListIterator(this, 0);
 	}
 
 	template<typename T>
 	inline Iterator<T>* ArrayList<T>::getEndIterator() const
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::getEndIterator: Not implemented yet.");
+		return new ArrayListIterator(this, size_);
 	}
 
 	/*template<typename T>
@@ -385,35 +383,38 @@ namespace structures
 	template<typename T>
 	inline ArrayList<T>::ArrayListIterator::~ArrayListIterator()
 	{
-		//TODO 03: ArrayList<T>::ArrayListIterator
+		position_ = 0;
+		arrayList_ = nullptr;
 	}
 
 	template<typename T>
 	inline Iterator<T>& ArrayList<T>::ArrayListIterator::operator=(const Iterator<T>& other)
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::ArrayListIterator::operator=: Not implemented yet.");
+		const ArrayListIterator& otherALI = dynamic_cast<const ArrayListIterator&>(other);
+
+		position_ = otherALI.position_;
+		arrayList_ = otherALI.arrayList_;
+		return *this;
 	}
 
 	template<typename T>
 	inline bool ArrayList<T>::ArrayListIterator::operator!=(const Iterator<T>& other)
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::ArrayListIterator::operator!=: Not implemented yet.");
+		const ArrayListIterator& otherALI = dynamic_cast<const ArrayListIterator&>(other);
+		return position_ != otherALI.position_ || arrayList_ != otherALI.arrayList_;
 	}
 
 	template<typename T>
 	inline const T ArrayList<T>::ArrayListIterator::operator*()
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::ArrayListIterator::operator*: Not implemented yet.");
+		return (*arrayList_)[position_];
 	}
 
 	template<typename T>
 	inline Iterator<T>& ArrayList<T>::ArrayListIterator::operator++()
 	{
-		//TODO 03: ArrayList
-		throw std::exception("ArrayList<T>::ArrayListIterator::operator++: Not implemented yet.");
+		position_++;
+		return *this;
 	}
 
 }
