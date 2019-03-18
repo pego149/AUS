@@ -3,6 +3,8 @@
 #include "list.h"
 #include "../structure_iterator.h"
 #include "../array/array.h"
+#include <Windows.h>
+#include <Psapi.h>
 
 namespace structures
 {
@@ -92,6 +94,24 @@ namespace structures
 		/// <returns> Iterator na koniec struktury. </returns>
 		/// <remarks> Zabezpecuje polymorfizmus. </remarks>
 		Iterator<T>* getEndIterator() const override;
+
+		/*/// <summary> Vrati teoreticky maximalny pocet prvkov, ktore je mozne do kontajnera ulozit (vzhladom na dostupnu pamat). </summary>
+		/// <returns> Maximalny pocet prvkov v strukture. </returns>
+		/// <remarks> Na ziskanie informacii o pamati je mozne vyuzit funkciu GetProcessMemoryInfo. </remarks>
+		size_t max_size() const;*/
+
+		/// <summary> Zabezpeci, aby mal zoznam danu kapacitu. Ak taku kapacitu zoznam uz ma, nespravi nic. </summary>
+		/// <param name = "capacity"> Pozadovana kapacita zoznamu. </param>
+		/// <remarks> Nemeni pocet prvkov v zozname. </remarks>
+		void reserve(size_t capacity);
+
+		/// <summary> Vrati aktualnu kapacitu zoznamu. </summary>
+		/// <returns> Aktualna kapacita zoznamu. </returns>
+		size_t capacity() const;
+
+		/// <summary> Fyzicky odstrani (dealokuje) nepotrebne miesto v zozname. </summary>
+		/// <remarks> Po volani tejto funkcie plati: size() == capacity(). </remarks>
+		void shrink_to_fit();
 	private:
 		/// <summary> Pole s datami. </summary>
 		Array<T>* array_;
@@ -311,6 +331,39 @@ namespace structures
 	{
 		//TODO 03: ArrayList
 		throw std::exception("ArrayList<T>::getEndIterator: Not implemented yet.");
+	}
+
+	/*template<typename T>
+	inline size_t ArrayList<T>::max_size() const
+	{
+		return GetProcessMemoryInfo();
+	}*/
+
+	template<typename T>
+	inline void ArrayList<T>::reserve(size_t capacity)
+	{
+		if (array_->size() < capacity)
+		{
+			Array<T>* nove = new Array<T>(capacity); //vytvor nove pole
+			Array<T>::copy(*array_, 0, *nove, 0, size_); //kopiruj
+			delete array_; //zahod
+			array_ = nove; //aktualizuj referenciu
+		}
+	}
+
+	template<typename T>
+	inline size_t ArrayList<T>::capacity() const
+	{
+		return array_->size();
+	}
+
+	template<typename T>
+	inline void ArrayList<T>::shrink_to_fit()
+	{
+		Array<T>* nove = new Array<T>(size_); //vytvor nove pole
+		Array<T>::copy(*array_, 0, *nove, 0, size_); //kopiruj
+		delete array_; //zahod
+		array_ = nove; //aktualizuj referenciu
 	}
 
 	template<typename T>

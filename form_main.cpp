@@ -1,3 +1,4 @@
+#include "structures/list/array_list.h"
 #include "form_main.h"
 
 #include "structures/heap_monitor.h"
@@ -7,7 +8,7 @@
 
 #include "structures/vector/vector.h"
 #include "structures/array/array.h"
-#include "structures/list/array_list.h"
+
 #include "structures/list/linked_list.h"
 #include "structures/stack/implicit_stack.h"
 #include "structures/stack/explicit_stack.h"
