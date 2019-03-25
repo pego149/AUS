@@ -72,13 +72,11 @@ namespace ui
 		factory->registerPrototype(structures::StructureADS::adsSTACK_LIST, new structures::ExplicitStack<data::DataType>());
 		factory->registerPrototype(structures::StructureADS::adsQUEUE_ARRAY, new structures::ImplicitQueue<data::DataType>());
 		factory->registerPrototype(structures::StructureADS::adsQUEUE_LIST, new structures::ExplicitQueue<data::DataType>());
-
-		//TODO 06: PriorityQueue: register prototype
 		//factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_ARRAY_LIST_SORTED, new structures::PriorityQueueSortedArrayList<data::DataType>());
 		//factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_ARRAY_LIST_UNSORTED, new structures::PriorityQueueUnsortedArrayList<data::DataType>());
-		//factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_LINKED_LIST, new structures::PriorityQueueLinkedList<data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_LINKED_LIST, new structures::PriorityQueueLinkedList<data::DataType>());
 		//factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_TWO_LISTS, new structures::PriorityQueueTwoLists<data::DataType>());
-		//factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_HEAP, new structures::Heap<data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_HEAP, new structures::Heap<data::DataType>());
 
 		//TODO 08: Tree: register prototype
 		//factory->registerPrototype(structures::StructureADS::adsTREE_MULTI_WAY, new structures::MultiWayTree<data::DataType>());

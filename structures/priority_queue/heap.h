@@ -101,35 +101,68 @@ namespace structures
 	template<typename T>
 	void Heap<T>::push(const int priority, const T& data)
 	{
-		//TODO 06: Heap
-		throw std::exception("Heap<T>::push: Not implemented yet.");
+		list_->add(new PriorityQueueItem<T>(priority, data));
+		int index = size() - 1;
+		int parentIndex = getParentIndex(index);
+
+		while (index != 0 && (*list_)[parentIndex]->getPriority() > priority)
+		{
+			DSRoutines::swap((*list_)[parentIndex], (*list_)[index]);
+			index = parentIndex;
+			parentIndex = getParentIndex(index);
+		}
 	}
 
 	template<typename T>
 	T Heap<T>::pop()
 	{
-		//TODO 06: Heap
-		throw std::exception("Heap<T>::pop: Not implemented yet.");
+		PriorityQueueItem<T>* item = (*list_)[0];
+		if (size() > 1)
+		{
+			(*list_)[0] = list_->removeAt(size() - 1);
+			int index = 0;
+			int sonIndex = getGreaterSonIndex(index);
+
+			while (sonIndex < size() && (*list_)[sonIndex]->getPriority() < item->getPriority())
+			{
+				DSRoutines::swap((*list_)[sonIndex], (*list_)[index]);
+				index = sonIndex;
+				sonIndex = getParentIndex(index);
+			}
+		}
+		else
+		{
+			list_->clear();
+		}
+
+		T data = item->accessData();
+		delete item;
+		return data;
 	}
 
 	template<typename T>
 	inline int Heap<T>::getParentIndex(const int index)
 	{
-		//TODO 06: Heap
-		throw std::exception("Heap<T>::getParentIndex: Not implemented yet.");
+		return ((index + 1) / 2) - 1;
 	}
 
 	template<typename T>
 	inline int Heap<T>::getGreaterSonIndex(const int index)
 	{
-		//TODO 06: Heap
-		throw std::exception("Heap<T>::getGreaterSonIndex: Not implemented yet.");
+		int indexL = ((index + 1) * 2) - 1;
+		int indexR = (index + 1) * 2;
+		int priorityL = indexL < size() ? (*list_)[indexL]->getPriority() : INT_MAX;
+		int priorityR = indexR < size() ? (*list_)[indexR]->getPriority() : INT_MAX;
+		return priorityL < priorityR ? indexL : indexR;
 	}
 
 	template<typename T>
 	inline int Heap<T>::indexOfPeek() const
 	{
-		//TODO 06: Heap
-		throw std::exception("Heap<T>::indexOfPeek: Not implemented yet.");
+		if (list_->isEmpty())
+		{
+			throw std::logic_error("EMPTY");
+		}
+		return 0;
 	}
 }
