@@ -247,15 +247,22 @@ namespace structures
 	template<typename T>
 	inline TreeNode<T>* TreeNode<T>::deepCopy()
 	{
-		//TODO 08: TreeNode
-		throw std::exception("TreeNode<T>::deepCopy: Not implemented yet.");
+		TreeNode<T>* result = shallowCopy();
+		for (size_t i = 0; i < degree(); i++)
+		{
+			if (getSon(i))
+			{
+				result->replaceSon(getSon(i)->deepCopy(), i);
+			}
+		}
+		return result;
+
 	}
 
 	template<typename T>
 	inline bool TreeNode<T>::isRoot()
 	{
-		//TODO 08: TreeNode
-		throw std::exception("TreeNode<T>::isRoot: Not implemented yet.");
+		return parent_ == nullptr;
 	}
 
 	template<typename T>
@@ -279,15 +286,29 @@ namespace structures
 	template<typename T>
 	inline TreeNode<T>* TreeNode<T>::getBrother(int brothersOrder)
 	{
-		//TODO 08: TreeNode
-		throw std::exception("TreeNode<T>::getBrother: Not implemented yet.");
+		if (parent_)
+		{
+			return parent_->getSon(brothersOrder);
+		}
+		else
+		{
+			throw std::logic_error("Node is root");
+		}
 	}
 
 	template<typename T>
 	inline size_t TreeNode<T>::sizeOfSubtree()
 	{
-		//TODO 08: TreeNode
-		throw std::exception("TreeNode<T>::sizeOfSubtree: Not implemented yet.");
+		size_t sum = 1;
+		for (size_t i = 0; i < degree(); i++)
+		{
+			TreeNode<T>* son = getSon(i);
+			if (son)
+			{
+				sum += son->sizeOfSubtree();
+			}
+		}
+		return sum;
 	}
 
 	template<typename T>
@@ -307,21 +328,19 @@ namespace structures
 	template<typename T>
 	inline Tree<T>::~Tree()
 	{
-		//TODO 08: Tree
+		clear();
 	}
 
 	template<typename T>
 	inline bool Tree<T>::isEmpty() const
 	{
-		//TODO 08: Tree
-		throw std::exception("Tree<T>::isEmpty: Not implemented yet.");
+		return root_ == nullptr;
 	}
 
 	template<typename T>
 	inline size_t Tree<T>::size() const
 	{
-		//TODO 08: Tree
-		throw std::exception("Tree<T>::size: Not implemented yet.");
+		return root_ == nullptr ? 0 : root_->sizeOfSubtree();
 	}
 
 	template<typename T>
@@ -364,15 +383,19 @@ namespace structures
 	template<typename T>
 	inline Tree<T>& Tree<T>::operator=(const Tree<T>& other)
 	{
-		//TODO 08: Tree
-		throw std::exception("Tree<T>::operator=: Not implemented yet.");
+		if (this != &other)
+		{
+			clear();
+			root_ = other.root_->deepCopy();
+		}
+		return *this;
 	}
 
 	template<typename T>
 	inline void Tree<T>::clear()
 	{
-		//TODO 08: Tree
-		throw std::exception("Tree<T>::clear: Not implemented yet.");
+		delete root_;
+		root_ = nullptr;
 	}
   
 	template<typename T>
@@ -384,8 +407,9 @@ namespace structures
 	template<typename T>             
 	inline TreeNode<T>* Tree<T>::replaceRoot(TreeNode<T>* newRoot)
 	{
-		//TODO 08: Tree
-		throw std::exception("Tree<T>::replaceRoot: Not implemented yet.");
+		TreeNode<T>* originalRoot = root_;
+		root_ = newRoot;
+		return originalRoot;
 	}
 
 	template<typename T>
@@ -398,35 +422,35 @@ namespace structures
 	template<typename T>
 	inline Tree<T>::TreeIterator::~TreeIterator()
 	{
-		//TODO 08: Tree<T>::TreeIterator
+		delete path_;
 	}
 
 	template<typename T>
 	inline Iterator<T>& Tree<T>::TreeIterator::operator=(const Iterator<T>& other)
 	{
-		//TODO 08: Tree<T>::TreeIterator
-		throw std::exception("Tree<T>::TreeIterator::operator=: Not implemented yet.");
+		const TreeIterator& otherTI = dynamic_cast<const TreeIterator&>(other);
+		*path_ = *otherTI.path_;
+		return *this;
 	}
 
 	template<typename T>
 	inline bool Tree<T>::TreeIterator::operator!=(const Iterator<T>& other)
 	{
-		//TODO 08: Tree<T>::TreeIterator
-		throw std::exception("Tree<T>::TreeIterator::operator!=: Not implemented yet.");
+		const TreeIterator& otherTI = dynamic_cast<const TreeIterator&>(other);
+		return *path_ != *otherTI.path_;
 	}
 
 	template<typename T>
 	inline const T Tree<T>::TreeIterator::operator*()
 	{
-		//TODO 08: Tree<T>::TreeIterator
-		throw std::exception("Tree<T>::TreeIterator::operator*: Not implemented yet.");
+		return path_->front()->accessData();
 	}
 
 	template<typename T>
 	inline Iterator<T>& Tree<T>::TreeIterator::operator++()
 	{
-		//TODO 08: Tree<T>::TreeIterator
-		throw std::exception("Tree<T>::TreeIterator::operator++: Not implemented yet.");
+		path_->pop();
+		return *this;
 	}
 
 	template<typename T>
@@ -439,8 +463,14 @@ namespace structures
 	template<typename T>
 	inline void Tree<T>::PreOrderTreeIterator::populatePath(TreeNode<T>* const current)
 	{
-		//TODO 08: Tree<T>::PreOrderTreeIterator
-		throw std::exception("Tree<T>::PreOrderTreeIterator::populatePath: Not implemented yet.");
+		if (current)
+		{
+			path_->push(current);
+			for (int i = 0; i < current->degree(); i++)
+			{
+				populatePath(current->getSon(i));
+			}
+		}
 	}
 
 	template<typename T>
@@ -453,8 +483,14 @@ namespace structures
 	template<typename T>
 	inline void Tree<T>::PostOrderTreeIterator::populatePath(TreeNode<T>* const current)
 	{
-		//TODO 08: Tree<T>::PostOrderTreeIterator
-		throw std::exception("Tree<T>::PostOrderTreeIterator::populatePath: Not implemented yet.");
+		if (current)
+		{
+			for (int i = 0; i < current->degree(); i++)
+			{
+				populatePath(current->getSon(i));
+			}
+			path_->push_back(current);
+		}
 	}
 
 	template<typename T>

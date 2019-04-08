@@ -106,56 +106,52 @@ namespace structures
 	template<typename T>
 	inline MultiWayTreeNode<T>::~MultiWayTreeNode()
 	{
-		//TODO 08: MultiWayTreeNode<T>
+		delete children_;
+		children_ = nullptr;
 	}
 
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::shallowCopy()
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::shallowCopy: Not implemented yet.");
+		return children_->clone()
 	}
 
 	template<typename T>
 	inline bool MultiWayTreeNode<T>::isLeaf()
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::isLeaf: Not implemented yet.");
+		return children_->size() == 0;
 	}
 
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::getSon(int order) const
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::getSon: Not implemented yet.");
+		return (*children_)[order];
 	}
 
 	template<typename T>
 	inline void MultiWayTreeNode<T>::insertSon(TreeNode<T>* son, int order)
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::insertSon: Not implemented yet.");
+		children_->insert(son, order)
 	}
 
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::replaceSon(TreeNode<T>* son, int order)
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::replaceSon: Not implemented yet.");
+		TreeNode<T>* deleted = children_->removeAt(order);
+		children_->insert(son, order)
+		return deleted;
 	}
 
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::removeSon(int order)
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::removeSon: Not implemented yet.");
+		return children_->removeAt(order);
 	}
 
 	template<typename T>
 	inline int MultiWayTreeNode<T>::degree()
 	{
-		//TODO 08: MultiWayTreeNode<T>
-		throw std::exception("MultiWayTreeNode<T>::degree: Not implemented yet.");
+		return children_->size();
 	}
 
 	template<typename T>
