@@ -106,6 +106,10 @@ namespace structures
 	template<typename T>
 	inline MultiWayTreeNode<T>::~MultiWayTreeNode()
 	{
+		for (auto child : (*children_))
+		{
+			delete child;
+		}
 		delete children_;
 		children_ = nullptr;
 	}

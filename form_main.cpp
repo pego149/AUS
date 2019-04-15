@@ -84,7 +84,7 @@ namespace ui
 		//factory->registerPrototype(structures::StructureADS::adsTREE_BINARY, new structures::BinaryTree<data::DataType>());
 
 		//TODO 09: SequenceTable: register prototype
-		//factory->registerPrototype(structures::StructureADS::adsTABLE_SEQUENCE_UNSORTED, new structures::UnsortedSequenceTable<data::KeyType, data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsTABLE_SEQUENCE_UNSORTED, new structures::UnsortedSequenceTable<data::KeyType, data::DataType>());
 		//factory->registerPrototype(structures::StructureADS::adsTABLE_SEQUENCE_SORTED, new structures::SortedSequenceTable<data::KeyType, data::DataType>());
 		//factory->registerPrototype(structures::StructureADS::adsTABLE_LINKED, new structures::LinkedTable<data::KeyType, data::DataType>());
 

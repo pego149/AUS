@@ -66,21 +66,33 @@ namespace structures
 	template<typename K, typename T>
 	inline void SortedSequenceTable<K, T>::insert(const K & key, const T & data)
 	{
-		//TODO 09: SortedSequenceTable
-		throw std::exception("SortedSequenceTable<K, T>::insert: Not implemented yet.");
+		bool found = false;
+		int index = indexOfKey(key, 0, size(), found);
+		if (!found) 
+		{
+			SequenceTable<K, T>::list_->insert(new TableItem<K, T>(key, data), index);
+		}
+		else
+		{
+			throw std::invalid_argument("Not found");
+		}
 	}
 
 	template<typename K, typename T>
 	inline TableItem<K, T>* SortedSequenceTable<K, T>::findTableItem(const K & key) const
 	{
-		//TODO 09: SortedSequenceTable
-		throw std::exception("SortedSequenceTable<K, T>::findTableItem: Not implemented yet.");
+		bool found = false;
+		int index = indexOfKey(key, 0, size(), found);
+		return found ? (*SequenceTable<K, T>::list_)[index] : nullptr;
 	}
 
 	template<typename K, typename T>
 	inline int SortedSequenceTable<K, T>::indexOfKey(const K & key, int indexStart, int indexEnd, bool & found) const
 	{
-		//TODO 09: SortedSequenceTable
-		throw std::exception("SortedSequenceTable<K, T>::indexOfKey: Not implemented yet.");
+		int stred = (indexStart + indexEnd) / 2;
+		if ((*list_))//dorobit
+		{
+
+		}
 	}
 }
