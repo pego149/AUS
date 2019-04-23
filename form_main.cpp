@@ -79,9 +79,9 @@ namespace ui
 		factory->registerPrototype(structures::StructureADS::adsPRIORITY_QUEUE_HEAP, new structures::Heap<data::DataType>());
 
 		//TODO 08: Tree: register prototype
-		//factory->registerPrototype(structures::StructureADS::adsTREE_MULTI_WAY, new structures::MultiWayTree<data::DataType>());
-		//factory->registerPrototype(structures::StructureADS::adsTREE_K_WAY, new structures::KWayTree<data::DataType, 5>());
-		//factory->registerPrototype(structures::StructureADS::adsTREE_BINARY, new structures::BinaryTree<data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsTREE_MULTI_WAY, new structures::MultiWayTree<data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsTREE_K_WAY, new structures::KWayTree<data::DataType, 5>());
+		factory->registerPrototype(structures::StructureADS::adsTREE_BINARY, new structures::BinaryTree<data::DataType>());
 
 		//TODO 09: SequenceTable: register prototype
 		factory->registerPrototype(structures::StructureADS::adsTABLE_SEQUENCE_UNSORTED, new structures::UnsortedSequenceTable<data::KeyType, data::DataType>());

@@ -117,7 +117,7 @@ namespace structures
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::shallowCopy()
 	{
-		return children_->clone()
+		return new MultiWayTreeNode<T>(*this);
 	}
 
 	template<typename T>
@@ -135,15 +135,18 @@ namespace structures
 	template<typename T>
 	inline void MultiWayTreeNode<T>::insertSon(TreeNode<T>* son, int order)
 	{
-		children_->insert(son, order)
+		children_->insert(dynamic_cast<MultiWayTreeNode<T>*>(son), order);
+		son->setParent(this);
 	}
 
 	template<typename T>
 	inline TreeNode<T>* MultiWayTreeNode<T>::replaceSon(TreeNode<T>* son, int order)
 	{
-		TreeNode<T>* deleted = children_->removeAt(order);
-		children_->insert(son, order)
-		return deleted;
+		TreeNode<T> * output = (*children_)[order];
+		(*children_)[order] = dynamic_cast<MultiWayTreeNode<T>*>(son);
+		son->setParent(this);
+		output->resetParent();
+		return output;
 	}
 
 	template<typename T>

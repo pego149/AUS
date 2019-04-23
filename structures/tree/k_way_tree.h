@@ -111,63 +111,100 @@ namespace structures
 	template<typename T, int K>
 	inline KWayTreeNode<T, K>::~KWayTreeNode()
 	{
-		//TODO 08: KWayTreeNode<T>
+		for (int i = 0; i < numberOfSons(); i++)
+		{
+			delete (*children_)[i];
+		}
+		delete children_;
+		children_ = nullptr;
 	}
 
 	template<typename T, int K>
 	inline TreeNode<T>* KWayTreeNode<T, K>::shallowCopy()
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::shallowCopy: Not implemented yet.");
+		return new KWayTreeNode<T, K>(*this);
 	}
 
 	template<typename T, int K>
 	inline bool KWayTreeNode<T, K>::isLeaf()
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::isLeaf: Not implemented yet.");
+		for (int i = 0; i < K; i++) {
+			if ((*children_)[i] != nullptr) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	template<typename T, int K>
 	inline TreeNode<T>* KWayTreeNode<T, K>::getSon(int order) const
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::getSon: Not implemented yet.");
+		return (*children_)[order];
 	}
 
 	template<typename T, int K>
 	inline void KWayTreeNode<T, K>::insertSon(TreeNode<T>* son, int order)
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::insertSon: Not implemented yet.");
+		if (DSRoutines::rangeCheck(0, numberOfSons()))
+		{
+			replaceSon(son, order);
+		}
+		else
+		{
+			std::out_of_range("Mimo rozsahu");
+		}
 	}
 
 	template<typename T, int K>
 	inline TreeNode<T>* KWayTreeNode<T, K>::replaceSon(TreeNode<T>* son, int order)
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::replaceSon: Not implemented yet.");
+		if (DSRoutines::rangeCheck(0, numberOfSons()))
+		{
+			return replaceSon(nullptr, order);
+		}
+		else
+		{
+			std::out_of_range("Mimo rozsahu");
+		}
 	}
 
 	template<typename T, int K>
 	inline TreeNode<T>* KWayTreeNode<T, K>::removeSon(int order)
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::removeSon: Not implemented yet.");
+		if (DSRoutines::rangeCheck(0, numberOfSons()))
+		{
+			KWayTreeNode<T, K> temp = (*children_)[order];
+			for (int i = order; i < numberOfSons() - 1; i++)
+			{
+				(*children_)[i] = (*children_)[i + 1];
+			}
+			(*children_)[numberOfSons()] = nullptr;
+			return temp;
+		}
+		else
+		{
+			std::out_of_range("Mimo rozsahu");
+		}
 	}
 
 	template<typename T, int K>
 	inline int KWayTreeNode<T, K>::degree()
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::degree: Not implemented yet.");
+		return K;
 	}
 
 	template<typename T, int K>
 	inline int KWayTreeNode<T, K>::numberOfSons()
 	{
-		//TODO 08: KWayTreeNode<T>
-		throw std::exception("KWayTreeNode<T>::numberOfSons: Not implemented yet.");
+		int temp = 0;
+		for (int i = 0; i < children_->size(); i++)
+		{
+			if ((*children_)[i])
+			{
+				temp++;
+			}
+		}
+		return temp;
 	}
 
 	template<typename T, int K>
