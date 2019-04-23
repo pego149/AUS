@@ -168,8 +168,14 @@ namespace structures
 	template<typename K, typename T>
 	inline void Treap<K, T>::insert(const K & key, const T & data)
 	{
-		//TODO 10: Treap
-		throw std::exception("Treap<K, T>::insert: Not implemented yet.");
+		TableItem<K, T>* item = new TreapItem<K, T>(key, data, (*generator_)());
+		BSTTreeNode* node = new BSTTreeNode(item);
+		if (!tryToInsertNode(node))
+		{
+			delete node;
+			delete item;
+			throw std::logic_error("Unable to insert");
+		}
 	}
 
 	template<typename K, typename T>
