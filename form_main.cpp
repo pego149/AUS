@@ -91,8 +91,7 @@ namespace ui
 		//TODO 09: HashTable: register prototype
 		//factory->registerPrototype(structures::StructureADS::adsTABLE_HASH, new structures::HashTable<data::KeyType, data::DataType>());
 
-		//TODO 10: BinarySearchTree: register prototype
-		//factory->registerPrototype(structures::StructureADS::adsTABLE_BST, new structures::BinarySearchTree<data::KeyType, data::DataType>());
+		factory->registerPrototype(structures::StructureADS::adsTABLE_BST, new structures::BinarySearchTree<data::KeyType, data::DataType>());
 
 		//TODO 10: Treap: register prototype
 		//factory->registerPrototype(structures::StructureADS::adsTABLE_TREAP, new structures::Treap<data::KeyType, data::DataType>());
@@ -138,7 +137,7 @@ namespace ui
 		PanelStructures::createAndIntegratePanelStructures(pnlGraph, structures::StructureADT::adtGRAPH);
 
 		//TODO 12: Sorting: register panel for sorting
-		//PanelSorting::createAndIntegratePanelSorting(pnlSorting);
+		PanelSorting::createAndIntegratePanelSorting(pnlSorting);
 	}
 
 	FormMain::~FormMain()

@@ -89,10 +89,11 @@ namespace structures
 	template<typename K, typename T>
 	inline int SortedSequenceTable<K, T>::indexOfKey(const K & key, int indexStart, int indexEnd, bool & found) const
 	{
-		int stred = (indexStart + indexEnd) / 2;
+		/*int stred = (indexStart + indexEnd) / 2;
 		if ((*list_))//dorobit
 		{
 
-		}
+		}*/
+		return 0;
 	}
 }

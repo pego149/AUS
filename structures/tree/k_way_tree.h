@@ -171,20 +171,7 @@ namespace structures
 	template<typename T, int K>
 	inline TreeNode<T>* KWayTreeNode<T, K>::removeSon(int order)
 	{
-		if (DSRoutines::rangeCheck(0, numberOfSons()))
-		{
-			KWayTreeNode<T, K> temp = (*children_)[order];
-			for (int i = order; i < numberOfSons() - 1; i++)
-			{
-				(*children_)[i] = (*children_)[i + 1];
-			}
-			(*children_)[numberOfSons()] = nullptr;
-			return temp;
-		}
-		else
-		{
-			std::out_of_range("Mimo rozsahu");
-		}
+		return replaceSon(nullptr, order);
 	}
 
 	template<typename T, int K>

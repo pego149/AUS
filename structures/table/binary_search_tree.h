@@ -283,7 +283,7 @@ namespace structures
 	inline typename BinarySearchTree<K,T>::BSTTreeNode* BinarySearchTree<K, T>::findBSTNode(const K & key, bool & found) const
 	{
 		found = false;
-		BSTTreeNode* poslednyVrchol = binaryTree_->getRoot();
+		BSTTreeNode* poslednyVrchol = dynamic_cast<BSTTreeNode*>(binaryTree_->getRoot());
 		if (binaryTree_->getRoot() == nullptr)
 		{
 			poslednyVrchol = nullptr;
